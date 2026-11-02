@@ -211,9 +211,10 @@ window.playerManager.addEventListener(
 
         await reportPlaybackStopped(playbackState, {
             ...getReportingParams(playbackState),
-            PositionTicks:
+            PositionTicks: Math.round(
                 (mediaFinishedEvent.currentMediaTime ??
                     getCurrentPositionTicks(playbackState)) * TicksPerSecond
+            )
         });
 
         defaultOnStop();
