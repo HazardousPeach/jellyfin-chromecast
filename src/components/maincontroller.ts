@@ -209,11 +209,14 @@ window.playerManager.addEventListener(
             return;
         }
 
+        const positionTicks =
+            mediaFinishedEvent.currentMediaTime === undefined
+                ? getCurrentPositionTicks(playbackState)
+                : mediaFinishedEvent.currentMediaTime * TicksPerSecond;
+
         await reportPlaybackStopped(playbackState, {
             ...getReportingParams(playbackState),
-            PositionTicks:
-                (mediaFinishedEvent.currentMediaTime ??
-                    getCurrentPositionTicks(playbackState)) * TicksPerSecond
+            PositionTicks: positionTicks
         });
 
         defaultOnStop();
